@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'dart:ui' as prefix0;
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,13 +23,13 @@ class MyApp extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   _titulos(),
+                  _botonesRedondeados(),
                 ],
               ),
             ),
           ],
         ),
-        bottomNavigationBar:
-            _bottomNavigationBar(context),
+        bottomNavigationBar: _bottomNavigationBar(context),
       ),
     );
   }
@@ -92,30 +94,98 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Widget _bottomNavigationBar(BuildContext context){
+  Widget _bottomNavigationBar(BuildContext context) {
     return new Theme(
       data: Theme.of(context).copyWith(
-        canvasColor: Color.fromRGBO(55,57,84,1.0),
-        primaryColor: Colors.pinkAccent,
-        textTheme: Theme.of(context).textTheme.copyWith(
-          caption: TextStyle(color: Color.fromRGBO(115,117,152,1.0)),
-        )
-      ),
+          canvasColor: Color.fromRGBO(55, 57, 84, 1.0),
+          primaryColor: Colors.pinkAccent,
+          textTheme: Theme.of(context).textTheme.copyWith(
+                caption: TextStyle(color: Color.fromRGBO(115, 117, 152, 1.0)),
+              )),
       child: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today, size: 30.0,),
+            icon: Icon(
+              Icons.calendar_today,
+              size: 30.0,
+            ),
             title: Container(),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bubble_chart, size: 30.0,),
+            icon: Icon(
+              Icons.bubble_chart,
+              size: 30.0,
+            ),
             title: Container(),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.supervised_user_circle, size: 30.0,),
+            icon: Icon(
+              Icons.supervised_user_circle,
+              size: 30.0,
+            ),
             title: Container(),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _botonesRedondeados() {
+    return Table(
+      children: <TableRow>[
+        TableRow(children: [
+          _crearBotonRedondeado(Colors.blue, Icons.border_all, "General"),
+          _crearBotonRedondeado(Colors.purpleAccent, Icons.directions_bus, "Bus"),
+        ]),
+        TableRow(children: [
+          _crearBotonRedondeado(Colors.pinkAccent, Icons.shop, "Buy"),
+          _crearBotonRedondeado(Colors.orange, Icons.insert_drive_file, "File"),
+        ]),
+        TableRow(children: [
+          _crearBotonRedondeado(Colors.blueAccent, Icons.movie_filter, "Entertainment"),
+          _crearBotonRedondeado(Colors.green, Icons.cloud, "Grocery"),
+        ]),
+        TableRow(children: [
+          _crearBotonRedondeado(Colors.red, Icons.collections, "Photos"),
+          _crearBotonRedondeado(Colors.teal, Icons.help_outline, "Help"),
+        ]),
+      ],
+    );
+  }
+
+  Widget _crearBotonRedondeado(Color color, IconData icono, String texto) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(70.0),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+        child: Container(
+          height: 180.0,
+          margin: EdgeInsets.all(15.0),
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(62, 66, 107, 0.7),
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              SizedBox(
+                height: 3.0,
+              ),
+              CircleAvatar(
+                radius: 35.0,
+                backgroundColor: color,
+                child: Icon(icono, color: Colors.white, size: 40.0),
+              ),
+              Text(
+                texto,
+                style: TextStyle(color: color),
+              ),
+              SizedBox(
+                height: 3.0,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
